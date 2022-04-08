@@ -89,7 +89,7 @@ const AddEmployee = () => {
                     <button className="btn btn-primary" onClick={(e) => saveEmployee(e)}>Save</button>
                 </div>
             </form>
-            <hr />
+            <hr/>
             <Link to="/">Back to List</Link>
         </div>
     );

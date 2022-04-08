@@ -44,7 +44,7 @@ const EmployeesList = () => {
             <tr>
               <td>Name</td>
               <td>Cpf</td>
-              <td>List</td>
+              <td>List(String)</td>
               <td>Actions</td>
             </tr>
           </thead>
