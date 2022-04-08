@@ -1,44 +1,19 @@
-import { useEffect, useState } from "react";
-import employeeService from "./services/employee.service";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
+import EmployeesList from "./components/EmployeesList";
+import NotFound from "./components/NotFound";
 
-const App = () => {
-
-  const [employees, setEmployees] = useState([]);
-
-  useEffect(() => {
-    employeeService.getAll()
-      .then(response => {
-        console.log('Printing the employees data', response.data)
-        setEmployees(response.data)
-      })
-      .catch(error => {
-        console.log('Something went wrong', error)
-      })
-  }, [])
-
+function App() {
   return (
-    <div>
-      <h3>List of Employees</h3>
+
+    <BrowserRouter>
       <div>
-        <table border="1" cellPadding="10">
-          <tr>
-            <td>Name</td>
-            <td>Cpf</td>
-            <td>List</td>
-          </tr>
-          {
-            employees.map(employee => (
-              <tr key={employee.id}>
-                <td>{employee.name}</td>
-                <td>{employee.cpf}</td>
-                <td>{employee.list}</td>
-              </tr>
-            ))
-          }
-        </table>
+        <Routes>
+          <Route exact path="/" element={<EmployeesList/>}/>
+          <Route path="*" element={<NotFound/>}/>
+        </Routes>
       </div>
-    </div>
-  );
+    </BrowserRouter>
+  )  
 }
 
 export default App;
