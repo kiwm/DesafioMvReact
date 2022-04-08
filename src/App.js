@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import employeeService from "./services/employee.service";
 
-function App() {
+const App = () => {
+
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    employeeService.getAll()
+      .then(response => {
+        console.log('Printing the employees data', response.data)
+        setEmployees(response.data)
+      })
+      .catch(error => {
+        console.log('Something went wrong', error)
+      })
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h3>List of Employees</h3>
+      <div>
+        <table border="1" cellPadding="10">
+          <tr>
+            <td>Name</td>
+            <td>Cpf</td>
+            <td>List</td>
+          </tr>
+          {
+            employees.map(employee => (
+              <tr key={employee.id}>
+                <td>{employee.name}</td>
+                <td>{employee.cpf}</td>
+                <td>{employee.list}</td>
+              </tr>
+            ))
+          }
+        </table>
+      </div>
     </div>
   );
 }
