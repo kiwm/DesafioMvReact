@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import employeeService from "../services/employee.service";
+import employeeService from "../services/employee.service.js";
+import { Link } from "react-router-dom"
 
 const EmployeesList = () => {
 
@@ -22,6 +23,7 @@ const EmployeesList = () => {
       <h3>List of Employees</h3>
       <hr/>
       <div>
+        <Link to="/add" className="btn btn-primary mb-2">Add Employee</Link>
         <table className="table table-bordered table-striped">
           <thead className="table-dark">
             <tr>

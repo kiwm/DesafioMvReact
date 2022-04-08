@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route} from "react-router-dom";
-import EmployeesList from "./components/EmployeesList";
-import NotFound from "./components/NotFound";
+import EmployeesList from "./components/EmployeesList.js";
+import NotFound from "./components/NotFound.js";
+import AddEmployee from "./components/AddEmployee.js";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <div>
         <Routes>
           <Route exact path="/" element={<EmployeesList/>}/>
+          <Route exact path="/add" element={<AddEmployee/>}/>
           <Route path="*" element={<NotFound/>}/>
         </Routes>
       </div>
