@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate, Link } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import employeeService from "../services/employee.service.js";
 
 const AddEmployee = () => {
@@ -8,21 +8,47 @@ const AddEmployee = () => {
     const [cpf, setCpf] = useState('');
     const [list, setList] = useState('');
     const navigate = useNavigate();
+    const {id} = useParams();
 
 
     const saveEmployee = (e) => {
+
         e.preventDefault();
 
-        const employee = { name, cpf, list };
-        employeeService.create(employee)
+        const employee = { name, cpf, list, id};
+        
+        if (id) {
+            employeeService.update(employee)
             .then(response => {
-                console.log("employee added successfully", response.data);
+                console.log('Employee data updated successfully.', response.data);
                 navigate("/");
             })
             .catch(error => {
-                console.log('something went wroing', error);
+                console.log('Something went wrong!')
             })
+        } else {
+            employeeService.create(employee)
+                .then(response => {
+                    console.log('employee added successfully!', response.data);
+                    navigate("/");
+                })
+                .catch(error => {
+                    console.log('something went wroing!', error);
+                })
+        }
     }
+
+    useEffect(() => {
+        employeeService.get(id)
+            .then(employee => {
+                setName(employee.data.name);
+                setCpf(employee.data.cpf);
+                setList(employee.data.list);
+            })
+            .catch(error => {
+                console.log('Someting went wrong!', error);
+            });
+    }, [])
 
     return (
         <div className="container">

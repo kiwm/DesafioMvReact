@@ -8,15 +8,30 @@ const EmployeesList = () => {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
+    init();
+  }, [])
+
+  const init = () => {
     employeeService.getAll()
+    .then(response => {
+      console.log('Printing the employees data', response.data);
+      setEmployees(response.data)
+    })
+    .catch(error => {
+      console.log('Something went wrong', error);
+    })
+  }
+
+  const handleDelete = id => {
+    employeeService.remove(id)
       .then(response => {
-        console.log('Printing the employees data', response.data)
-        setEmployees(response.data)
+        console.log('Employee deleted successfully!', response.data);
+        init();
       })
       .catch(error => {
-        console.log('Something went wrong', error)
+        console.log('Someting went wrong!', error);
       })
-  }, [])
+  }
 
   return (
     <div className="container">
@@ -30,6 +45,7 @@ const EmployeesList = () => {
               <td>Name</td>
               <td>Cpf</td>
               <td>List</td>
+              <td>Actions</td>
             </tr>
           </thead>
           <tbody>
@@ -39,6 +55,10 @@ const EmployeesList = () => {
                   <td>{employee.name}</td>
                   <td>{employee.cpf}</td>
                   <td>{employee.list}</td>
+                  <td>
+                    <Link className="btn btn-info" to={`/employees/edit/${employee.id}`}>Update</Link>
+                    <button className="btn btn-danger ml-2" onClick={(e) => {handleDelete(employee.id)}}>Delete</button>
+                  </td>
                 </tr>
               ))
             }
